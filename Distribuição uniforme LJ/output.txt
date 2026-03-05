@@ -1,0 +1,30 @@
+# Configuração de parâmetros para um teste estatisticamente relevante
+params_teste = {
+    "N": 4000,
+    "L": 140,
+    "dt": 0.001,
+    "m": 1.0,
+    "epsilon": 1.0,
+    "sigma": 1.0,
+    "r_cut": 2.5,
+    "velocity_distribution": "maxwell",
+    "v0": 1.0,
+    "n_steps": 100000
+}
+
+
+# Temperatura:
+# Frio T < 0.3: v0 = 1.0
+# Caso limite T ~ 1.0: v0 = 2.5
+# Gás quente T ~ 3.0: v0 = 4.0
+
+# Já iniciamos com uma distribuição de velocidades "maxwell" para garantir que o sistema comece em um estado próximo do equilíbrio.
+print("Rodando simulação com distribuição inicial gaussiana...")
+analyze_observables(params_teste, n_avg_steps=20000)
+
+
+params_teste["velocity_distribution"] = "uniform" # Forçamos um estado inicial fora do equilíbrio
+
+# Queremos ver se as colisões levam o sistema ao equilíbrio (Maxwell-Boltzmann)
+print("Rodando simulação com distribuição inicial uniforme...")
+analyze_observables(params_teste, n_avg_steps=20000)

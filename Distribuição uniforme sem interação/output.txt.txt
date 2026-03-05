@@ -1,0 +1,26 @@
+# 1. Configuração de parâmetros para um teste rápido e estatisticamente relevante
+params_teste = {
+    "N": 4000,               # Quantidade suficiente para estatística, mas leve para o PC
+    "L": 20.0,               # Tamanho da caixa
+    "R": 0.1,              # Raio das partículas
+    "v0": 1.0,              # Magnitude da velocidade inicial
+    "m": 1.0,               # Massa
+    "dt": 0.01,            # Passo de tempo estável
+    "n_steps": 200000,       # Tempo suficiente para ocorrerem milhares de colisões
+    "n_cells": 200,          # Otimização de busca
+    "velocity_distribution": "uniform" # Forçamos um estado inicial fora do equilíbrio
+}
+
+# 2. Execução da Análise com Interações (Gás Real)
+# Queremos ver se as colisões levam o sistema ao equilíbrio (Maxwell-Boltzmann)
+print("Rodando simulação com colisões (Gás Real)...")
+#analyze_observables(params_teste, n_avg_steps=80000, interaction=True)
+
+# 3. Execução da Análise sem Interações (Gás Ideal)
+# Aqui o sistema DEVE falhar em atingir a Maxwell-Boltzmann, 
+# mantendo a distribuição original 'fixed' ou 'uniform'.
+print("Rodando simulação sem colisões (Gás Ideal)...")
+analyze_observables(params_teste, n_avg_steps=80000, interaction=False)
+
+{'vx_std': np.float64(0.5837212713016899),
+ 'speed_scale': np.float64(0.5629094034974724)}
